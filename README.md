@@ -14,7 +14,7 @@ An interactive fictional investigation game. Start with a premise, examine a per
 
 Requirements: Node.js 20+ and a reachable MongoDB instance. Mystery generation also requires a Google Gemini API key.
 
-1. Copy `.env.example` to `server/.env` and set `MONGODB_URI`, `SESSION_SECRET` (at least 32 random characters), and `GEMINI_API_KEY`. `GEMINI_MODEL` selects the model; it defaults to `gemini-3.8-flash`.
+1. Copy `.env.example` to `.env` in the repository root and set `MONGODB_URI`, `SESSION_SECRET` (at least 32 random characters), and `GEMINI_API_KEY`. `GEMINI_MODEL` selects the model; it defaults to `gemini-3.8-flash`. The server also loads `server/.env` if you prefer to keep it there.
 2. Install dependencies from the repository root with `npm install`.
 3. Start the API and client with `npm run dev`.
 4. Open `http://localhost:5173`. The Vite development server proxies `/api` requests to Express on port 4000.
@@ -23,7 +23,7 @@ The API refuses to start when MongoDB is unavailable. The health endpoint is `GE
 
 ## Production build
 
-Run `npm run build`. Configure the server environment variables in the deployment environment and run `npm start` from the repository root. Serve the built `client/dist` through a static host or reverse proxy. Set `CLIENT_ORIGIN` to the exact public frontend origin and use HTTPS so the session cookie is secure.
+Run `npm run build`, then `npm start` from the repository root. Express serves the compiled frontend and API from one origin. The included Render Blueprint is in [render.yaml](render.yaml); see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for setup. HTTPS is required in production so the session cookie is secure.
 
 ## User sessions and privacy
 
@@ -46,4 +46,4 @@ See [docs/API.md](docs/API.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), an
 
 ## Current scope
 
-Generation is synchronous, which the specification permits for a prototype. Image evidence uses textual descriptions and a neutral interface; external image/video generation and object storage are not configured. User accounts, cross-device sync, and deployed hosting are outside this initial implementation. See `spec.md` for the product requirements and acceptance criteria.
+Generation is synchronous, which the specification permits for a prototype. Image evidence uses textual descriptions and a neutral interface; external image/video generation and object storage are not configured. User accounts and cross-device sync are outside this initial implementation. Render configuration is included, but a live deployment still requires your MongoDB and Gemini credentials and Render account. See `spec.md` for the product requirements and acceptance criteria.

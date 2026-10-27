@@ -8,7 +8,7 @@ config({ path: [resolve(serverDirectory, '.env'), resolve(serverDirectory, '..',
 
 const configSchema = z.object({
   PORT: z.coerce.number().default(4000),
-  CLIENT_ORIGIN: z.string().default('http://localhost:5173'),
+  CLIENT_ORIGIN: z.string().url().optional(),
   MONGODB_URI: z.string().min(1),
   SESSION_SECRET: z.string().min(32).default('local-development-secret-change-before-deploy-000000'),
   GEMINI_API_KEY: z.string().optional(),
@@ -17,4 +17,4 @@ const configSchema = z.object({
   RATE_LIMIT_MAX: z.coerce.number().default(8)
 });
 export const env = configSchema.parse(process.env);
-if (process.env.NODE_ENV === 'production' && process.env.SESSION_SECRET === undefined) throw new Error('SESSION_SECRET must be configured in production.');
+if (process.env.NODE_ENV === 'production' && (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32)) throw new Error('SESSION_SECRET must be at least 32 characters in production.');
