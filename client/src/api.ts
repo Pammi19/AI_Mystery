@@ -1,4 +1,4 @@
-const base = '/api/v1';
+const base = 'https://ai-mystery-828e.onrender.com/api/v1';
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${base}${path}`, { ...options, credentials: 'include', headers: { 'Content-Type': 'application/json', ...options?.headers } });
   const body = await response.json();
