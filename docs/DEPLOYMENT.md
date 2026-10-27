@@ -10,7 +10,7 @@ The repo includes a Render Blueprint that builds the client and server into one 
 
 ## Create the service
 
-In Render, create a new Blueprint and select this repository. Render reads the root `render.yaml`, builds with `npm ci && npm run build`, starts with `npm start`, and checks `/api/v1/health`.
+In Render, create a new Blueprint and select this repository. Render reads the root `render.yaml`, builds with `npm ci --include=dev && npm run build`, starts with `npm start`, and checks `/api/v1/health`. The explicit `--include=dev` is needed because TypeScript and declaration packages are development dependencies required during compilation.
 
 When prompted for unsynced values, supply:
 
